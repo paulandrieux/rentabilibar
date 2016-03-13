@@ -68,7 +68,7 @@ class ChangeHandler
     {
         return $data['action'] == 'change'
             && array_key_exists('custom_attributes', $data['change']['diff'])
-            && $data['change']['diff']['custom_attributes']['to'][0]['name'] == 'time spent';
+            && $data['change']['diff']['custom_attributes']['to'][0]['name'] == 'Time spent';
 
     }
 
