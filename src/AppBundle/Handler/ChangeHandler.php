@@ -28,7 +28,6 @@ class ChangeHandler
         $this->hourCost = $hourCost;
     }
 
-
     /**
      * Handle the sent data and inform node server
      *
@@ -38,10 +37,14 @@ class ChangeHandler
      */
     public function handle($data)
     {
+        error_log($data);
         if ($this->isHandleable($data)) {
             $attrs = $data['change']['diff']['custom_attributes'];
             $timeSpentTo = $this->convertToSeconds($attrs['to'][0]['value']);
-            $timeSpentFrom = $this->convertToSeconds($attrs['from'][0]['value']);
+            $timeSpentFrom = 0;
+            if (isset($attrs['from'][0])) {
+                $timeSpentFrom = $this->convertToSeconds($attrs['from'][0]['value']);
+            }
 
             $this->createProgress($timeSpentFrom, $timeSpentTo);
 
@@ -51,6 +54,7 @@ class ChangeHandler
             $progressPercent = $this->computeProgressPercent($progress);
 
             $this->callNode($progress, $progressPercent);
+
             return "ok";
 
         }
@@ -180,6 +184,5 @@ class ChangeHandler
 
         return $progress / $needsADay;
     }
-
 
 }
