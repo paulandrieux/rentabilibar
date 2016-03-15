@@ -37,7 +37,7 @@ class ChangeHandler
      */
     public function handle($data)
     {
-        error_log($data);
+        error_log(var_export($data, true));
         if ($this->isHandleable($data)) {
             $attrs = $data['change']['diff']['custom_attributes'];
             $timeSpentTo = $this->convertToSeconds($attrs['to'][0]['value']);
